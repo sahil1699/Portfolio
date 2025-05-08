@@ -1044,6 +1044,38 @@ footer {
     background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
 }
 
+/* Floating Resume Button for Mobile */
+.floating-resume-btn {
+    display: none; /* Hidden by default, shown only on mobile */
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 999;
+}
+
+.floating-resume-btn a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    color: white;
+    padding: 12px 20px;
+    border-radius: 30px;
+    font-weight: 500;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.floating-resume-btn a:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.floating-resume-btn i {
+    font-size: 1.2rem;
+}
+
 /* Responsive Styles */
 @media (max-width: 992px) {
     .hero-content {
@@ -1077,6 +1109,16 @@ footer {
     header .container {
         flex-direction: row;
         flex-wrap: wrap;
+    }
+
+    /* Hide the original resume button in header on mobile */
+    .resume-btn {
+        display: none;
+    }
+
+    /* Show the floating resume button on mobile */
+    .floating-resume-btn {
+        display: block;
     }
 
     nav {
