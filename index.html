@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sahil Choudhary | Software Engineer</title>
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -12,10 +12,10 @@
 <body>
     <header>
         <div class="container">
-            <div class="logo">
-                <svg viewBox="0 0 100 100" class="logo-svg">
-                    <path d="M70,30 Q70,15 50,15 Q30,15 30,30 Q30,45 50,50 Q70,55 70,70 Q70,85 50,85 Q30,85 30,70" stroke="currentColor" stroke-width="8" fill="none" stroke-linecap="round"/>
-                </svg>
+            <div class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
             <nav>
                 <ul>
@@ -92,27 +92,118 @@
     <section id="experience" class="experience">
         <div class="container">
             <h2 class="section-title">Experience</h2>
+            <div class="company-header">
+                <h3>Unthinkable Solutions</h3>
+                <p>January 2021 - Present · 4 years 5 months</p>
+                <p>Gurugram, Haryana, India</p>
+            </div>
             <div class="timeline">
+                <!-- Associate - Software Engineering -->
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
-                        <h3>Software Engineer</h3>
-                        <h4>Unthinkable Solutions</h4>
-                        <p class="timeline-date">January 2021 - Present</p>
-                        <ul class="timeline-list">
-                            <li>Engineered healthcare systems and policy management platforms, working on health assessments, employee wellness, and insurance policies for healthcare employees.</li>
-                            <li>Automated workflows with AWS Step Functions, reducing manual effort by 50% and speeding up report generation by 30%.</li>
-                            <li>Led a high-stakes data migration of 6M+ user records and 80K+ organizations between enterprise benefit platforms, ensuring 99.99% availability and 100% data integrity.</li>
-                            <li>Migrated legacy APIs to a serverless single-Lambda architecture, reducing project size by 90% and cutting deployment time to 3 minutes.</li>
-                            <li>Transformed email processing by migrating to AWS SES V2, increasing delivery success rate to 99%.</li>
-                            <li>Optimized backend performance using AWS CloudWatch, reducing deployment failures by 40%.</li>
-                            <li>Automated releases with Azure CI/CD, streamlining 95% of deployment processes.</li>
-                            <li>Built middleware such as Custom Model Binder, reducing code redundancy by 40%.</li>
-                            <li>Integrated SignalR using the Publish/Subscribe pattern for real-time chat, enhancing customer engagement by 25%.</li>
-                            <li>Architected and implemented AWS Cognito for secure authentication, improving security compliance by 100%.</li>
-                            <li>Mentored 10+ engineers in C#, .NET Core, and AWS, enhancing team expertise.</li>
-                            <li>Achieved 95% test coverage using NUnit, reducing production defects by 70%.</li>
-                        </ul>
+                        <div class="timeline-header">
+                            <h3>Associate - Software Engineering</h3>
+                            <p class="timeline-date">January 2023 - Present · 2 years 5 months</p>
+                            <p class="timeline-location">Hybrid</p>
+                            <button class="toggle-details" aria-label="Toggle details">
+                                <i class="fas fa-chevron-down"></i>
+                                <span class="sr-only">Toggle details</span>
+                            </button>
+                        </div>
+                        <div class="timeline-details">
+                            <ul class="timeline-list">
+                                <li>Led a high-stakes data migration of millions of users and thousands of organization records between enterprise benefit platforms, ensuring 99.99% availability and 100% data integrity.</li>
+                                <li>Designed and implemented a multi-step migration workflow using AWS Step Functions, syncing insured, paid, and other employees while maintaining migration status in DocumentDB.</li>
+                                <li>Migrated legacy APIs to a serverless single-Lambda architecture, reducing project size by 90% and cutting deployment time to 3 minutes.</li>
+                                <li>Automated deployment with Serverless Application Model (SAM) scripts, improving efficiency and reliability.</li>
+                                <li>Designed a queue system for critical workflows using MongoDB, enhancing system resilience and performance.</li>
+                                <li>Worked on multiple healthcare portals, including Patient Portal, Consultation Management, Admin, and Partner Portals, managing critical tasks and master data.</li>
+                                <li>Implemented real-time chat with SignalR, enhancing customer engagement by 25%.</li>
+                                <li>Resolved complex issues related to doctor access, consultation continuity, and slot limitations.</li>
+                                <li>Achieved consistent project deadlines and over 90% test coverage, fixing critical bugs.</li>
+                            </ul>
+                            <div class="timeline-tech">
+                                <span class="tech-tag">.NET Core</span>
+                                <span class="tech-tag">AWS Lambda</span>
+                                <span class="tech-tag">Step Functions</span>
+                                <span class="tech-tag">MySQL</span>
+                                <span class="tech-tag">DocumentDB</span>
+                                <span class="tech-tag">MongoDB</span>
+                                <span class="tech-tag">Azure DevOps</span>
+                                <span class="tech-tag">SignalR</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Jr. Associate - Software Engineering -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3>Jr. Associate - Software Engineering</h3>
+                            <p class="timeline-date">July 2021 - December 2022 · 1 year 6 months</p>
+                            <p class="timeline-location">Remote</p>
+                            <button class="toggle-details" aria-label="Toggle details">
+                                <i class="fas fa-chevron-down"></i>
+                                <span class="sr-only">Toggle details</span>
+                            </button>
+                        </div>
+                        <div class="timeline-details">
+                            <ul class="timeline-list">
+                                <li>Led backend system development for processing medical reports, enhancing user experience with consolidated PDFs.</li>
+                                <li>Designed AWS Step Functions-based batch processing, utilizing AWS SES for user-specific PDFs and email notifications.</li>
+                                <li>Transformed email processing by migrating to AWS SES V2, increasing delivery success rate to 99%.</li>
+                                <li>Implemented fail-safe PDF merging for multiple users, improving efficiency and minimizing errors.</li>
+                                <li>Designed an efficient data collection workflow using AWS Step Functions, integrating Salesforce, MongoDB, and SQL stored procedures for monthly reports.</li>
+                                <li>Built middleware such as Custom Model Binder for central API management, reducing code redundancy by 40%.</li>
+                                <li>Optimized backend performance using AWS CloudWatch, reducing deployment failures by 40%.</li>
+                                <li>Collaborated on a medical data synchronization project, creating a resilient API using AWS API Gateway, Chromium for PDF generation, and AWS S3 for storage.</li>
+                                <li>Automated workflows with AWS Step Functions, reducing manual effort by 50% and speeding up report generation by 30%.</li>
+                            </ul>
+                            <div class="timeline-tech">
+                                <span class="tech-tag">.NET Core</span>
+                                <span class="tech-tag">AWS Lambda</span>
+                                <span class="tech-tag">AWS SES</span>
+                                <span class="tech-tag">AWS S3</span>
+                                <span class="tech-tag">API Gateway</span>
+                                <span class="tech-tag">Step Functions</span>
+                                <span class="tech-tag">CloudWatch</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Student Internship -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3>Student Internship</h3>
+                            <p class="timeline-date">January 2021 - June 2021 · 6 months</p>
+                            <p class="timeline-location">Remote</p>
+                            <button class="toggle-details" aria-label="Toggle details">
+                                <i class="fas fa-chevron-down"></i>
+                                <span class="sr-only">Toggle details</span>
+                            </button>
+                        </div>
+                        <div class="timeline-details">
+                            <ul class="timeline-list">
+                                <li>Successfully completed a 6-month training program in .NET Core, earning a billable incentive for swift project alignment.</li>
+                                <li>Underwent foundational training in AWS services essential for healthcare projects.</li>
+                                <li>Developed a robust backend system for processing medical laboratory CSV reports as part of a team.</li>
+                                <li>Generated PDF test reports with user information and QR codes, and orchestrated notifications.</li>
+                                <li>Architected and implemented AWS Cognito for secure authentication, improving security compliance by 100%.</li>
+                                <li>Automated releases with Azure CI/CD, streamlining deployment processes.</li>
+                            </ul>
+                            <div class="timeline-tech">
+                                <span class="tech-tag">.NET Core</span>
+                                <span class="tech-tag">AWS</span>
+                                <span class="tech-tag">Azure CI/CD</span>
+                                <span class="tech-tag">AWS Cognito</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -140,7 +231,27 @@
                     <div class="achievement-info">
                         <h3>Special Recognition</h3>
                         <p>Acknowledged for dedication, diligence, adaptability, and deadline consistency</p>
-                        <a href="https://www.linkedin.com/feed/update/urn:li:activity:6894964382464638977/" target="_blank">View Recognition</a>
+                        <a href="https://www.linkedin.com/posts/sahilchoudharysde_recognition-activity-6894964382464638977-5E01/" target="_blank">View Recognition</a>
+                    </div>
+                </div>
+                <div class="achievement-card">
+                    <div class="achievement-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="achievement-info">
+                        <h3>Team Recognition - Legacy Data Migration</h3>
+                        <p>Recognized alongside an incredible team for successfully migrating 7 years of legacy data to a new portal</p>
+                        <a href="http://linkedin.com/feed/update/urn:li:activity:7275563246177136641/" target="_blank">View Recognition</a>
+                    </div>
+                </div>
+                <div class="achievement-card">
+                    <div class="achievement-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="achievement-info">
+                        <h3>Individual Recognition</h3>
+                        <p>"Sahil is a dedicated, committed and hardworking team member who has always gone an extra mile to complete tasks within timeline. A quick learner who takes ownership."</p>
+                        <a href="https://www.linkedin.com/posts/sahilchoudharysde_recognition-activity-6894964382464638977-5E01/" target="_blank">View Recognition</a>
                     </div>
                 </div>
             </div>
@@ -475,5 +586,65 @@
     </div>
 
     <script src="scripts/main.js"></script>
+
+    <!-- Direct inline script for toggle functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set up toggle buttons
+            var toggleButtons = document.querySelectorAll('.toggle-details');
+
+            for (var i = 0; i < toggleButtons.length; i++) {
+                toggleButtons[i].addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    var header = this.closest('.timeline-header');
+                    var details = header.nextElementSibling;
+
+                    // Toggle active class
+                    if (details.classList.contains('active')) {
+                        details.classList.remove('active');
+                        this.classList.remove('active');
+                    } else {
+                        details.classList.add('active');
+                        this.classList.add('active');
+                    }
+                });
+            }
+
+            // Set up header clicks
+            var headers = document.querySelectorAll('.timeline-header');
+
+            for (var i = 0; i < headers.length; i++) {
+                headers[i].addEventListener('click', function(e) {
+                    // Don't handle if the click was on the button
+                    if (e.target.closest('.toggle-details')) {
+                        return;
+                    }
+
+                    var button = this.querySelector('.toggle-details');
+                    var details = this.nextElementSibling;
+
+                    // Toggle active class
+                    if (details.classList.contains('active')) {
+                        details.classList.remove('active');
+                        button.classList.remove('active');
+                    } else {
+                        details.classList.add('active');
+                        button.classList.add('active');
+                    }
+                });
+            }
+
+            // Open first section by default
+            if (headers.length > 0) {
+                var firstDetails = headers[0].nextElementSibling;
+                var firstButton = headers[0].querySelector('.toggle-details');
+
+                firstDetails.classList.add('active');
+                firstButton.classList.add('active');
+            }
+        });
+    </script>
 </body>
 </html>

@@ -1,5 +1,12 @@
 // Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
+    // Ensure floating resume button is visible on mobile without scrolling
+    if (window.innerWidth <= 768) {
+        document.querySelector('.floating-resume-btn').style.display = 'block';
+    }
+
+    // Initialize experience timeline with collapsible sections
+    initExperienceTimeline();
     // Custom background animation with random shapes
     const canvas = document.getElementById('background-canvas');
     const ctx = canvas.getContext('2d');
@@ -396,43 +403,110 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Mobile menu toggle (for smaller screens)
-    const createMobileMenu = () => {
-        const header = document.querySelector('header');
+    const setupMobileMenu = () => {
         const nav = document.querySelector('nav');
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
 
-        // Create mobile menu button
-        const mobileMenuBtn = document.createElement('div');
-        mobileMenuBtn.className = 'mobile-menu-btn';
-        mobileMenuBtn.innerHTML = '<span></span><span></span><span></span>';
-
-        // Insert before nav
-        header.insertBefore(mobileMenuBtn, nav);
-
-        // Toggle menu on click
-        mobileMenuBtn.addEventListener('click', function() {
-            this.classList.toggle('active');
-            nav.classList.toggle('active');
-        });
-
-        // Close menu when clicking on a link
-        const navLinks = document.querySelectorAll('nav a');
-        navLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                mobileMenuBtn.classList.remove('active');
-                nav.classList.remove('active');
+        if (mobileMenuBtn) {
+            // Toggle menu on click
+            mobileMenuBtn.addEventListener('click', function() {
+                this.classList.toggle('active');
+                nav.classList.toggle('active');
             });
-        });
+
+            // Close menu when clicking on a link
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileMenuBtn.classList.remove('active');
+                    nav.classList.remove('active');
+                });
+            });
+        }
     };
 
-    // Only create mobile menu for smaller screens
-    if (window.innerWidth <= 768) {
-        createMobileMenu();
-    }
+    // Setup mobile menu
+    setupMobileMenu();
 
     // Handle window resize
     window.addEventListener('resize', function() {
-        if (window.innerWidth <= 768 && !document.querySelector('.mobile-menu-btn')) {
-            createMobileMenu();
+        // Toggle floating resume button visibility based on screen width
+        const floatingResumeBtn = document.querySelector('.floating-resume-btn');
+        if (window.innerWidth <= 768) {
+            floatingResumeBtn.style.display = 'block';
+        } else {
+            floatingResumeBtn.style.display = 'none';
         }
     });
 });
+
+// Initialize experience timeline with collapsible sections
+function initExperienceTimeline() {
+    console.log("Initializing experience timeline");
+
+    // Directly add click event listeners to all toggle buttons
+    document.querySelectorAll('.toggle-details').forEach((button, index) => {
+        console.log(`Setting up button ${index}`);
+
+        button.onclick = function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            console.log(`Button ${index} clicked`);
+
+            // Find the details section (sibling of the parent header)
+            const header = this.closest('.timeline-header');
+            const details = header.nextElementSibling;
+
+            console.log(`Details found:`, details);
+
+            // Toggle active classes
+            if (details.classList.contains('active')) {
+                console.log('Closing section');
+                details.classList.remove('active');
+                this.classList.remove('active');
+            } else {
+                console.log('Opening section');
+                details.classList.add('active');
+                this.classList.add('active');
+            }
+
+            return false;
+        };
+    });
+
+    // Also make the headers clickable (except the button part)
+    document.querySelectorAll('.timeline-header').forEach((header, index) => {
+        header.onclick = function(e) {
+            // Don't handle if the click was on or inside the button
+            if (e.target.closest('.toggle-details')) {
+                return;
+            }
+
+            console.log(`Header ${index} clicked`);
+
+            // Find the button and details
+            const button = this.querySelector('.toggle-details');
+            const details = this.nextElementSibling;
+
+            // Toggle active classes
+            if (details.classList.contains('active')) {
+                details.classList.remove('active');
+                button.classList.remove('active');
+            } else {
+                details.classList.add('active');
+                button.classList.add('active');
+            }
+        };
+    });
+
+    // Expand the first position by default
+    const firstDetails = document.querySelector('.timeline-details');
+    const firstButton = document.querySelector('.toggle-details');
+
+    if (firstDetails && firstButton) {
+        console.log("Expanding first position by default");
+        firstDetails.classList.add('active');
+        firstButton.classList.add('active');
+    }
+}
