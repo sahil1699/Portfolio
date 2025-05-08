@@ -363,7 +363,7 @@
             <div class="projects-grid">
                 <div class="project-card">
                     <div class="project-image">
-                        <img src="https://raw.githubusercontent.com/sahil1699/The-Path-Finding-Visulizer/main/images/pathfinding.png" alt="Path Finding Visualizer">
+                        <canvas id="pathfinding-canvas" class="project-canvas" data-project="pathfinding"></canvas>
                     </div>
                     <div class="project-content">
                         <h3>The Path Finding Visualizer</h3>
@@ -380,7 +380,7 @@
                 </div>
                 <div class="project-card">
                     <div class="project-image">
-                        <img src="https://miro.medium.com/v2/resize:fit:1400/1*V5ERogI3wCezG2A0VXIFyQ.png" alt="AI ChatBot">
+                        <canvas id="chatbot-canvas" class="project-canvas" data-project="chatbot"></canvas>
                     </div>
                     <div class="project-content">
                         <h3>AI ChatBot & WhatsApp Chatbot</h3>
@@ -397,7 +397,7 @@
                 </div>
                 <div class="project-card">
                     <div class="project-image">
-                        <img src="https://www.ecommercenext.org/wp-content/uploads/2020/11/E-Commerce-Web-Design.jpg" alt="Rocky E-Commerce">
+                        <canvas id="ecommerce-canvas" class="project-canvas" data-project="ecommerce"></canvas>
                     </div>
                     <div class="project-content">
                         <h3>Rocky E-Commerce</h3>
@@ -414,7 +414,7 @@
                 </div>
                 <div class="project-card">
                     <div class="project-image">
-                        <img src="https://miro.medium.com/v2/resize:fit:1400/1*n_ms1q5YoHAQXXUIfeADKQ.png" alt="Sorting Visualizer">
+                        <canvas id="sorting-canvas" class="project-canvas" data-project="sorting"></canvas>
                     </div>
                     <div class="project-content">
                         <h3>Sorting Visualizer</h3>
@@ -589,65 +589,5 @@
     </div>
 
     <script src="scripts/main.js"></script>
-
-    <!-- Direct inline script for toggle functionality -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Set up toggle buttons
-            var toggleButtons = document.querySelectorAll('.toggle-details');
-
-            for (var i = 0; i < toggleButtons.length; i++) {
-                toggleButtons[i].addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-
-                    var header = this.closest('.timeline-header');
-                    var details = header.nextElementSibling;
-
-                    // Toggle active class
-                    if (details.classList.contains('active')) {
-                        details.classList.remove('active');
-                        this.classList.remove('active');
-                    } else {
-                        details.classList.add('active');
-                        this.classList.add('active');
-                    }
-                });
-            }
-
-            // Set up header clicks
-            var headers = document.querySelectorAll('.timeline-header');
-
-            for (var i = 0; i < headers.length; i++) {
-                headers[i].addEventListener('click', function(e) {
-                    // Don't handle if the click was on the button
-                    if (e.target.closest('.toggle-details')) {
-                        return;
-                    }
-
-                    var button = this.querySelector('.toggle-details');
-                    var details = this.nextElementSibling;
-
-                    // Toggle active class
-                    if (details.classList.contains('active')) {
-                        details.classList.remove('active');
-                        button.classList.remove('active');
-                    } else {
-                        details.classList.add('active');
-                        button.classList.add('active');
-                    }
-                });
-            }
-
-            // Open first section by default
-            if (headers.length > 0) {
-                var firstDetails = headers[0].nextElementSibling;
-                var firstButton = headers[0].querySelector('.toggle-details');
-
-                firstDetails.classList.add('active');
-                firstButton.classList.add('active');
-            }
-        });
-    </script>
 </body>
 </html>

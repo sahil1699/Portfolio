@@ -385,22 +385,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.addEventListener('scroll', animateSkillBars);
 
-    // Project image placeholders
-    const projectImages = document.querySelectorAll('.project-image img');
-
-    // Set placeholder images for projects
-    projectImages.forEach((img, index) => {
-        // Fix image paths with direct assignments
-        if (img.getAttribute('src') === 'assets/Imgs/path-finding.jpg') {
-            img.setAttribute('src', 'assets/Imgs/IMG-20230916-WA0058.jpg');
-        } else if (img.getAttribute('src') === 'assets/Imgs/chatbot.jpg') {
-            img.setAttribute('src', 'assets/Imgs/IMG-20240122-WA0004.jpg');
-        } else if (img.getAttribute('src') === 'assets/Imgs/ecommerce.jpg') {
-            img.setAttribute('src', 'assets/Imgs/WhatsApp Image 2025-05-04 at 21.58.32.jpeg');
-        } else if (img.getAttribute('src') === 'assets/Imgs/sorting.jpg') {
-            img.setAttribute('src', 'assets/Imgs/WhatsApp Image 2025-05-04 at 21.59.27.jpeg');
-        }
-    });
+    // Initialize project graphics with simple static visuals
+    initProjectGraphics();
 
     // Mobile menu toggle (for smaller screens)
     const setupMobileMenu = () => {
@@ -444,11 +430,22 @@ document.addEventListener('DOMContentLoaded', function() {
 function initExperienceTimeline() {
     console.log("Initializing experience timeline");
 
-    // Directly add click event listeners to all toggle buttons
+    // Remove any existing event listeners by cloning and replacing elements
+    document.querySelectorAll('.toggle-details').forEach((button) => {
+        const newButton = button.cloneNode(true);
+        button.parentNode.replaceChild(newButton, button);
+    });
+
+    document.querySelectorAll('.timeline-header').forEach((header) => {
+        const newHeader = header.cloneNode(true);
+        header.parentNode.replaceChild(newHeader, header);
+    });
+
+    // Add event listeners to all toggle buttons
     document.querySelectorAll('.toggle-details').forEach((button, index) => {
         console.log(`Setting up button ${index}`);
 
-        button.onclick = function(e) {
+        button.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
 
@@ -470,14 +467,12 @@ function initExperienceTimeline() {
                 details.classList.add('active');
                 this.classList.add('active');
             }
-
-            return false;
-        };
+        });
     });
 
     // Also make the headers clickable (except the button part)
     document.querySelectorAll('.timeline-header').forEach((header, index) => {
-        header.onclick = function(e) {
+        header.addEventListener('click', function(e) {
             // Don't handle if the click was on or inside the button
             if (e.target.closest('.toggle-details')) {
                 return;
@@ -497,7 +492,7 @@ function initExperienceTimeline() {
                 details.classList.add('active');
                 button.classList.add('active');
             }
-        };
+        });
     });
 
     // Expand the first position by default
@@ -508,5 +503,392 @@ function initExperienceTimeline() {
         console.log("Expanding first position by default");
         firstDetails.classList.add('active');
         firstButton.classList.add('active');
+    }
+}
+
+// Function to initialize project graphics
+function initProjectGraphics() {
+    const projectCanvases = document.querySelectorAll('.project-canvas');
+
+    projectCanvases.forEach(canvas => {
+        const ctx = canvas.getContext('2d');
+        const projectType = canvas.getAttribute('data-project');
+
+        // Set canvas dimensions
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+
+        // Draw project-specific graphics
+        switch (projectType) {
+            case 'pathfinding':
+                drawPathfindingGraphic(ctx, canvas.width, canvas.height);
+                break;
+            case 'chatbot':
+                drawChatbotGraphic(ctx, canvas.width, canvas.height);
+                break;
+            case 'ecommerce':
+                drawEcommerceGraphic(ctx, canvas.width, canvas.height);
+                break;
+            case 'sorting':
+                drawSortingGraphic(ctx, canvas.width, canvas.height);
+                break;
+        }
+
+        // Add hover effect
+        canvas.addEventListener('mousemove', () => {
+            // Simple hover effect - just add a subtle glow
+            ctx.save();
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.restore();
+        });
+
+        // Reset on mouse out
+        canvas.addEventListener('mouseout', () => {
+            // Redraw the graphic
+            switch (projectType) {
+                case 'pathfinding':
+                    drawPathfindingGraphic(ctx, canvas.width, canvas.height);
+                    break;
+                case 'chatbot':
+                    drawChatbotGraphic(ctx, canvas.width, canvas.height);
+                    break;
+                case 'ecommerce':
+                    drawEcommerceGraphic(ctx, canvas.width, canvas.height);
+                    break;
+                case 'sorting':
+                    drawSortingGraphic(ctx, canvas.width, canvas.height);
+                    break;
+            }
+        });
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        projectCanvases.forEach(canvas => {
+            const ctx = canvas.getContext('2d');
+            const projectType = canvas.getAttribute('data-project');
+
+            // Update canvas dimensions
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+
+            // Redraw project-specific graphics
+            switch (projectType) {
+                case 'pathfinding':
+                    drawPathfindingGraphic(ctx, canvas.width, canvas.height);
+                    break;
+                case 'chatbot':
+                    drawChatbotGraphic(ctx, canvas.width, canvas.height);
+                    break;
+                case 'ecommerce':
+                    drawEcommerceGraphic(ctx, canvas.width, canvas.height);
+                    break;
+                case 'sorting':
+                    drawSortingGraphic(ctx, canvas.width, canvas.height);
+                    break;
+            }
+        });
+    });
+}
+
+// Draw a pathfinding visualization graphic
+function drawPathfindingGraphic(ctx, width, height) {
+    // Clear canvas
+    ctx.clearRect(0, 0, width, height);
+
+    // Set background
+    ctx.fillStyle = '#f0f8ff';
+    ctx.fillRect(0, 0, width, height);
+
+    // Draw grid
+    const cellSize = 20;
+    const rows = Math.floor(height / cellSize);
+    const cols = Math.floor(width / cellSize);
+
+    ctx.strokeStyle = '#ccc';
+    ctx.lineWidth = 1;
+
+    // Draw grid lines
+    for (let i = 0; i <= rows; i++) {
+        ctx.beginPath();
+        ctx.moveTo(0, i * cellSize);
+        ctx.lineTo(width, i * cellSize);
+        ctx.stroke();
+    }
+
+    for (let i = 0; i <= cols; i++) {
+        ctx.beginPath();
+        ctx.moveTo(i * cellSize, 0);
+        ctx.lineTo(i * cellSize, height);
+        ctx.stroke();
+    }
+
+    // Draw start and end points
+    ctx.fillStyle = '#4CAF50';
+    ctx.fillRect(cellSize, cellSize, cellSize, cellSize);
+
+    ctx.fillStyle = '#F44336';
+    ctx.fillRect(width - cellSize * 2, height - cellSize * 2, cellSize, cellSize);
+
+    // Draw some walls/obstacles
+    ctx.fillStyle = '#333';
+    for (let i = 0; i < 15; i++) {
+        const x = Math.floor(Math.random() * (cols - 2) + 1) * cellSize;
+        const y = Math.floor(Math.random() * (rows - 2) + 1) * cellSize;
+        ctx.fillRect(x, y, cellSize, cellSize);
+    }
+
+    // Draw a simple path
+    ctx.strokeStyle = '#2196F3';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(cellSize * 1.5, cellSize * 1.5);
+
+    // Create a zigzag path
+    let currentX = cellSize * 1.5;
+    let currentY = cellSize * 1.5;
+    const endX = width - cellSize * 1.5;
+    const endY = height - cellSize * 1.5;
+
+    while (currentX < endX || currentY < endY) {
+        if (currentX < endX) {
+            currentX += cellSize;
+        } else if (currentY < endY) {
+            currentY += cellSize;
+        }
+
+        ctx.lineTo(currentX, currentY);
+    }
+
+    ctx.stroke();
+
+    // Add a title
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+    ctx.font = 'bold 16px Arial';
+    ctx.fillText('Path Finding Visualizer', 10, 20);
+}
+
+// Draw a chatbot visualization graphic
+function drawChatbotGraphic(ctx, width, height) {
+    // Clear canvas
+    ctx.clearRect(0, 0, width, height);
+
+    // Set background
+    const gradient = ctx.createLinearGradient(0, 0, width, height);
+    gradient.addColorStop(0, '#f5f7fa');
+    gradient.addColorStop(1, '#e4e8eb');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, width, height);
+
+    // Draw chat bubbles
+    // User bubble
+    const bubbleRadius = 10;
+    ctx.fillStyle = '#e1ffc7';
+    roundRect(ctx, 10, 40, width * 0.6, 50, bubbleRadius, true);
+
+    // Bot bubble
+    ctx.fillStyle = '#ffffff';
+    roundRect(ctx, width * 0.3, 110, width * 0.65, 60, bubbleRadius, true);
+
+    // Draw text in bubbles
+    ctx.fillStyle = '#333';
+    ctx.font = '14px Arial';
+    ctx.fillText('Hello, can you help me with my project?', 20, 70);
+    ctx.fillText('Of course! I can assist with your coding questions.', width * 0.3 + 10, 140);
+
+    // Draw a simple bot icon
+    ctx.fillStyle = '#0066cc';
+    ctx.beginPath();
+    ctx.arc(width - 30, 30, 20, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Draw bot face
+    ctx.fillStyle = '#fff';
+    ctx.beginPath();
+    ctx.arc(width - 35, 25, 4, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(width - 25, 25, 4, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Draw mouth
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(width - 30, 35, 8, 0, Math.PI);
+    ctx.stroke();
+
+    // Add a title
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+    ctx.font = 'bold 16px Arial';
+    ctx.fillText('AI ChatBot', 10, 20);
+}
+
+// Draw an e-commerce visualization graphic
+function drawEcommerceGraphic(ctx, width, height) {
+    // Clear canvas
+    ctx.clearRect(0, 0, width, height);
+
+    // Set background
+    const gradient = ctx.createLinearGradient(0, 0, 0, height);
+    gradient.addColorStop(0, '#f9f9f9');
+    gradient.addColorStop(1, '#e9ecef');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, width, height);
+
+    // Draw a simple store layout
+    // Header
+    ctx.fillStyle = '#343a40';
+    ctx.fillRect(0, 0, width, 40);
+
+    // Logo
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 18px Arial';
+    ctx.fillText('Rocky Shop', 10, 25);
+
+    // Search bar
+    ctx.fillStyle = '#fff';
+    roundRect(ctx, width / 2 - 100, 10, 200, 20, 10, true);
+
+    // Cart icon
+    ctx.fillStyle = '#fff';
+    ctx.beginPath();
+    ctx.arc(width - 20, 20, 10, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Product grid
+    const productSize = 70;
+    const margin = 10;
+    const startX = (width - (productSize * 2 + margin)) / 2;
+    const startY = 60;
+
+    // Draw products
+    for (let row = 0; row < 2; row++) {
+        for (let col = 0; col < 2; col++) {
+            const x = startX + col * (productSize + margin);
+            const y = startY + row * (productSize + margin);
+
+            // Product box
+            ctx.fillStyle = '#fff';
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.1)';
+            ctx.shadowBlur = 5;
+            ctx.shadowOffsetX = 2;
+            ctx.shadowOffsetY = 2;
+            roundRect(ctx, x, y, productSize, productSize, 5, true);
+            ctx.shadowColor = 'transparent';
+
+            // Product image placeholder
+            ctx.fillStyle = '#e0e0e0';
+            roundRect(ctx, x + 5, y + 5, productSize - 10, productSize - 30, 3, true);
+
+            // Product title
+            ctx.fillStyle = '#333';
+            ctx.font = '10px Arial';
+            ctx.fillText('Product ' + (row * 2 + col + 1), x + 5, y + productSize - 10);
+
+            // Price
+            ctx.fillStyle = '#0066cc';
+            ctx.font = 'bold 10px Arial';
+            ctx.fillText('$' + (Math.floor(Math.random() * 100) + 10), x + 5, y + productSize - 2);
+        }
+    }
+
+    // Add a title
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+    ctx.font = 'bold 16px Arial';
+    ctx.fillText('E-Commerce Platform', 10, 25);
+}
+
+// Draw a sorting visualization graphic
+function drawSortingGraphic(ctx, width, height) {
+    // Clear canvas
+    ctx.clearRect(0, 0, width, height);
+
+    // Set background
+    ctx.fillStyle = '#f8f9fa';
+    ctx.fillRect(0, 0, width, height);
+
+    // Draw bars representing an array being sorted
+    const numBars = 15;
+    const barWidth = Math.floor((width - 20) / numBars);
+    const maxHeight = height - 40;
+
+    // Create an array of heights (partially sorted to show the sorting process)
+    const heights = [];
+    for (let i = 0; i < numBars; i++) {
+        // Create a partially sorted array
+        if (i < numBars / 2) {
+            heights.push(20 + Math.random() * (maxHeight / 2));
+        } else {
+            heights.push(maxHeight / 2 + Math.random() * (maxHeight / 2));
+        }
+    }
+
+    // Sort the first few elements to show progress
+    heights.sort((a, b) => a - b);
+
+    // Shuffle the rest
+    for (let i = 5; i < numBars; i++) {
+        const j = 5 + Math.floor(Math.random() * (numBars - 5));
+        [heights[i], heights[j]] = [heights[j], heights[i]];
+    }
+
+    // Draw the bars
+    for (let i = 0; i < numBars; i++) {
+        const x = 10 + i * barWidth;
+        const barHeight = heights[i];
+
+        // Gradient for bars
+        const gradient = ctx.createLinearGradient(0, height - barHeight, 0, height);
+
+        // Color based on position (to show sorting progress)
+        if (i < 5) {
+            gradient.addColorStop(0, '#4CAF50');
+            gradient.addColorStop(1, '#81C784');
+        } else {
+            gradient.addColorStop(0, '#2196F3');
+            gradient.addColorStop(1, '#64B5F6');
+        }
+
+        ctx.fillStyle = gradient;
+        ctx.fillRect(x, height - barHeight, barWidth - 2, barHeight);
+    }
+
+    // Draw a "current position" marker
+    ctx.fillStyle = '#F44336';
+    const markerX = 10 + 5 * barWidth;
+    ctx.fillRect(markerX, 30, barWidth - 2, 5);
+
+    // Add a title
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+    ctx.font = 'bold 16px Arial';
+    ctx.fillText('Sorting Visualizer', 10, 20);
+}
+
+// Helper function to draw rounded rectangles
+function roundRect(ctx, x, y, width, height, radius, fill, stroke) {
+    if (typeof stroke === 'undefined') {
+        stroke = false;
+    }
+    if (typeof radius === 'undefined') {
+        radius = 5;
+    }
+    ctx.beginPath();
+    ctx.moveTo(x + radius, y);
+    ctx.lineTo(x + width - radius, y);
+    ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+    ctx.lineTo(x + width, y + height - radius);
+    ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+    ctx.lineTo(x + radius, y + height);
+    ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+    ctx.lineTo(x, y + radius);
+    ctx.quadraticCurveTo(x, y, x + radius, y);
+    ctx.closePath();
+    if (fill) {
+        ctx.fill();
+    }
+    if (stroke) {
+        ctx.stroke();
     }
 }
