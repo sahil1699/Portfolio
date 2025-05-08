@@ -188,7 +188,7 @@ header {
 
 header .container {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
 }
 
@@ -257,6 +257,9 @@ nav {
     border-radius: 30px;
     padding: 5px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    flex: 1;
+    display: flex;
+    justify-content: center;
 }
 
 nav ul {
@@ -305,6 +308,10 @@ nav ul li a:hover::before {
 nav ul li a.active {
     background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
     color: white;
+}
+
+.resume-btn {
+    margin-left: 20px;
 }
 
 .resume-btn a {
@@ -1289,14 +1296,17 @@ footer {
 @media (max-width: 768px) {
     .mobile-menu-btn {
         display: flex;
-        order: 1;
-        margin-left: auto;
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
     }
 
     header .container {
         flex-direction: row;
         flex-wrap: wrap;
-        justify-content: space-between;
+        justify-content: center;
+        position: relative;
     }
 
     /* Hide the original resume button in header on mobile */
@@ -1321,6 +1331,8 @@ footer {
         margin-top: 15px;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         padding: 0;
+        order: 3;
+        flex: 0 0 100%;
     }
 
     nav.active {
