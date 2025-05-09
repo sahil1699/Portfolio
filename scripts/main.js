@@ -414,6 +414,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Setup mobile menu
     setupMobileMenu();
 
+    // Initialize horizontal scrolling for sections
+    initHorizontalScrolling();
+
     // Handle window resize
     window.addEventListener('resize', function() {
         // Toggle floating resume button visibility based on screen width
@@ -425,6 +428,91 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+// Initialize horizontal scrolling with navigation buttons
+function initHorizontalScrolling() {
+    // Define sections with horizontal scrolling
+    const scrollSections = [
+        {
+            container: '.achievements-content',
+            prevBtn: '#achievements-prev',
+            nextBtn: '#achievements-next',
+            cardWidth: 350 // Approximate width of each card including gap
+        },
+        {
+            container: '.projects-grid',
+            prevBtn: '#projects-prev',
+            nextBtn: '#projects-next',
+            cardWidth: 350
+        },
+        {
+            container: '.certifications-grid',
+            prevBtn: '#certifications-prev',
+            nextBtn: '#certifications-next',
+            cardWidth: 300
+        },
+        {
+            container: '.education-container',
+            prevBtn: '#education-prev',
+            nextBtn: '#education-next',
+            cardWidth: 400
+        }
+    ];
+
+    // Setup each section
+    scrollSections.forEach(section => {
+        const container = document.querySelector(section.container);
+        const prevBtn = document.querySelector(section.prevBtn);
+        const nextBtn = document.querySelector(section.nextBtn);
+
+        if (!container || !prevBtn || !nextBtn) return;
+
+        // Initially hide prev button
+        prevBtn.style.opacity = '0.5';
+        prevBtn.style.pointerEvents = 'none';
+
+        // Scroll to next item
+        nextBtn.addEventListener('click', () => {
+            container.scrollBy({
+                left: section.cardWidth,
+                behavior: 'smooth'
+            });
+        });
+
+        // Scroll to previous item
+        prevBtn.addEventListener('click', () => {
+            container.scrollBy({
+                left: -section.cardWidth,
+                behavior: 'smooth'
+            });
+        });
+
+        // Update button states on scroll
+        container.addEventListener('scroll', () => {
+            // Check if we can scroll back
+            if (container.scrollLeft <= 10) {
+                prevBtn.style.opacity = '0.5';
+                prevBtn.style.pointerEvents = 'none';
+            } else {
+                prevBtn.style.opacity = '1';
+                prevBtn.style.pointerEvents = 'auto';
+            }
+
+            // Check if we can scroll forward
+            const maxScrollLeft = container.scrollWidth - container.clientWidth - 10;
+            if (container.scrollLeft >= maxScrollLeft) {
+                nextBtn.style.opacity = '0.5';
+                nextBtn.style.pointerEvents = 'none';
+            } else {
+                nextBtn.style.opacity = '1';
+                nextBtn.style.pointerEvents = 'auto';
+            }
+        });
+
+        // Trigger scroll event to set initial button states
+        container.dispatchEvent(new Event('scroll'));
+    });
+}
 
 // Initialize experience timeline with collapsible sections
 function initExperienceTimeline() {
@@ -532,6 +620,15 @@ function initProjectGraphics() {
             case 'sorting':
                 drawSortingGraphic(ctx, canvas.width, canvas.height);
                 break;
+            case 'instagram':
+                drawInstagramCloneGraphic(ctx, canvas.width, canvas.height);
+                break;
+            case 'webdev':
+                drawWebDevProjectsGraphic(ctx, canvas.width, canvas.height);
+                break;
+            case 'gaming':
+                drawGamingMeniaGraphic(ctx, canvas.width, canvas.height);
+                break;
         }
 
         // Add hover effect
@@ -558,6 +655,15 @@ function initProjectGraphics() {
                     break;
                 case 'sorting':
                     drawSortingGraphic(ctx, canvas.width, canvas.height);
+                    break;
+                case 'instagram':
+                    drawInstagramCloneGraphic(ctx, canvas.width, canvas.height);
+                    break;
+                case 'webdev':
+                    drawWebDevProjectsGraphic(ctx, canvas.width, canvas.height);
+                    break;
+                case 'gaming':
+                    drawGamingMeniaGraphic(ctx, canvas.width, canvas.height);
                     break;
             }
         });
@@ -586,6 +692,15 @@ function initProjectGraphics() {
                     break;
                 case 'sorting':
                     drawSortingGraphic(ctx, canvas.width, canvas.height);
+                    break;
+                case 'instagram':
+                    drawInstagramCloneGraphic(ctx, canvas.width, canvas.height);
+                    break;
+                case 'webdev':
+                    drawWebDevProjectsGraphic(ctx, canvas.width, canvas.height);
+                    break;
+                case 'gaming':
+                    drawGamingMeniaGraphic(ctx, canvas.width, canvas.height);
                     break;
             }
         });
@@ -864,6 +979,228 @@ function drawSortingGraphic(ctx, width, height) {
     ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
     ctx.font = 'bold 16px Arial';
     ctx.fillText('Sorting Visualizer', 10, 20);
+}
+
+// Draw an Instagram Clone visualization graphic
+function drawInstagramCloneGraphic(ctx, width, height) {
+    // Clear canvas
+    ctx.clearRect(0, 0, width, height);
+
+    // Set background
+    const gradient = ctx.createLinearGradient(0, 0, width, height);
+    gradient.addColorStop(0, '#f9f9f9');
+    gradient.addColorStop(1, '#f0f0f0');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, width, height);
+
+    // Draw Instagram-like interface
+    // Header
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, width, 40);
+
+    // Instagram logo
+    ctx.fillStyle = '#262626';
+    ctx.font = 'italic bold 18px Arial';
+    ctx.fillText('Instagram', 10, 25);
+
+    // Post container
+    const postY = 50;
+    const postHeight = height - 60;
+
+    // Post header
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(10, postY, width - 20, 40);
+
+    // User avatar
+    ctx.fillStyle = '#e1e1e1';
+    ctx.beginPath();
+    ctx.arc(30, postY + 20, 15, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Username
+    ctx.fillStyle = '#262626';
+    ctx.font = 'bold 14px Arial';
+    ctx.fillText('username', 55, postY + 25);
+
+    // Post image
+    ctx.fillStyle = '#e1e1e1';
+    ctx.fillRect(10, postY + 50, width - 20, postHeight - 100);
+
+    // Like, comment, share icons
+    const iconY = postY + postHeight - 40;
+
+    // Heart icon
+    ctx.fillStyle = '#262626';
+    ctx.beginPath();
+    ctx.arc(30, iconY, 8, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Comment icon
+    ctx.beginPath();
+    ctx.arc(60, iconY, 8, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Share icon
+    ctx.beginPath();
+    ctx.arc(90, iconY, 8, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Add a title
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+    ctx.font = 'bold 16px Arial';
+    ctx.fillText('Instagram Clone', 10, 20);
+}
+
+// Draw a Web Development Projects visualization graphic
+function drawWebDevProjectsGraphic(ctx, width, height) {
+    // Clear canvas
+    ctx.clearRect(0, 0, width, height);
+
+    // Set background
+    const gradient = ctx.createLinearGradient(0, 0, width, height);
+    gradient.addColorStop(0, '#f5f5f5');
+    gradient.addColorStop(1, '#e0e0e0');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, width, height);
+
+    // Draw a collection of web technologies
+    const centerX = width / 2;
+    const centerY = height / 2;
+    const radius = Math.min(width, height) / 3;
+
+    // Draw HTML5 logo (simplified)
+    ctx.fillStyle = '#E44D26';
+    ctx.beginPath();
+    ctx.moveTo(centerX - radius/2, centerY - radius/2);
+    ctx.lineTo(centerX - radius/3, centerY + radius/2);
+    ctx.lineTo(centerX, centerY - radius/2);
+    ctx.closePath();
+    ctx.fill();
+
+    // Draw CSS3 logo (simplified)
+    ctx.fillStyle = '#1572B6';
+    ctx.beginPath();
+    ctx.moveTo(centerX, centerY - radius/2);
+    ctx.lineTo(centerX + radius/3, centerY + radius/2);
+    ctx.lineTo(centerX + radius/2, centerY - radius/2);
+    ctx.closePath();
+    ctx.fill();
+
+    // Draw JS logo (simplified)
+    ctx.fillStyle = '#F7DF1E';
+    ctx.fillRect(centerX - radius/2, centerY, radius/2, radius/2);
+
+    // Draw React logo (simplified)
+    ctx.fillStyle = '#61DAFB';
+    ctx.beginPath();
+    ctx.arc(centerX + radius/4, centerY, radius/4, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Draw Node.js logo (simplified)
+    ctx.fillStyle = '#339933';
+    ctx.beginPath();
+    ctx.arc(centerX - radius/4, centerY + radius/4, radius/5, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Add a title
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+    ctx.font = 'bold 16px Arial';
+    ctx.fillText('Web Development Projects', 10, 20);
+}
+
+// Draw a Gaming Menia visualization graphic
+function drawGamingMeniaGraphic(ctx, width, height) {
+    // Clear canvas
+    ctx.clearRect(0, 0, width, height);
+
+    // Set background
+    const gradient = ctx.createLinearGradient(0, 0, width, height);
+    gradient.addColorStop(0, '#000000');
+    gradient.addColorStop(1, '#1a1a1a');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, width, height);
+
+    // Draw game elements
+    const padding = 20;
+    const gameSize = Math.min(width, height) / 2 - padding;
+
+    // Draw Snake game (top left)
+    ctx.fillStyle = '#4CAF50';
+    const snakeX = padding;
+    const snakeY = padding;
+
+    // Snake body segments
+    for (let i = 0; i < 5; i++) {
+        ctx.fillRect(snakeX + i * 10, snakeY + 15, 8, 8);
+    }
+
+    // Food
+    ctx.fillStyle = '#FF5722';
+    ctx.fillRect(snakeX + 60, snakeY + 15, 8, 8);
+
+    // Draw Pong game (top right)
+    ctx.fillStyle = '#FFFFFF';
+    const pongX = width - padding - gameSize;
+    const pongY = padding;
+
+    // Paddles
+    ctx.fillRect(pongX + 10, pongY + 10, 5, 30);
+    ctx.fillRect(pongX + gameSize - 15, pongY + gameSize - 40, 5, 30);
+
+    // Ball
+    ctx.beginPath();
+    ctx.arc(pongX + gameSize/2, pongY + gameSize/2, 5, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Draw Flappy Bird (bottom left)
+    const flappyX = padding;
+    const flappyY = height - padding - gameSize;
+
+    // Pipes
+    ctx.fillStyle = '#4CAF50';
+    ctx.fillRect(flappyX + 40, flappyY, 20, gameSize/2 - 20);
+    ctx.fillRect(flappyX + 40, flappyY + gameSize/2 + 20, 20, gameSize/2 - 20);
+
+    // Bird
+    ctx.fillStyle = '#FFEB3B';
+    ctx.beginPath();
+    ctx.arc(flappyX + 20, flappyY + gameSize/2, 8, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Draw Brick Breaker (bottom right)
+    const brickX = width - padding - gameSize;
+    const brickY = height - padding - gameSize;
+
+    // Bricks
+    const brickColors = ['#F44336', '#2196F3', '#FFEB3B', '#4CAF50'];
+    const brickWidth = (gameSize - 10) / 4;
+    const brickHeight = 15;
+
+    for (let row = 0; row < 4; row++) {
+        for (let col = 0; col < 4; col++) {
+            ctx.fillStyle = brickColors[row];
+            ctx.fillRect(
+                brickX + col * brickWidth + 5,
+                brickY + row * brickHeight + 5,
+                brickWidth - 5,
+                brickHeight - 5
+            );
+        }
+    }
+
+    // Paddle
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(brickX + gameSize/2 - 20, brickY + gameSize - 20, 40, 10);
+
+    // Ball
+    ctx.beginPath();
+    ctx.arc(brickX + gameSize/2, brickY + gameSize - 30, 5, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Add a title
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+    ctx.font = 'bold 16px Arial';
+    ctx.fillText('The Gaming Menia', 10, 20);
 }
 
 // Helper function to draw rounded rectangles

@@ -769,10 +769,18 @@ nav ul li a.active {
 
 /* Achievements Section */
 .achievements-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    display: flex;
     gap: 30px;
-    justify-content: center;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+    -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+    padding: 10px 5px 20px 5px;
+    position: relative;
+}
+
+.achievements-content::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome, Safari and Opera */
 }
 
 .achievement-card {
@@ -782,9 +790,11 @@ nav ul li a.active {
     padding: 25px;
     display: flex;
     align-items: flex-start;
-    width: 100%;
+    min-width: 300px;
+    max-width: 350px;
     transition: var(--transition);
     height: 100%;
+    flex-shrink: 0;
 }
 
 .achievement-card:hover {
@@ -821,6 +831,46 @@ nav ul li a.active {
     font-weight: 500;
     display: inline-block;
     margin-top: 5px;
+}
+
+/* Scroll Navigation Buttons */
+.scroll-nav-container {
+    position: relative;
+}
+
+.scroll-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: all 0.3s ease;
+}
+
+.scroll-nav-btn:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.scroll-nav-btn.prev {
+    left: 10px;
+}
+
+.scroll-nav-btn.next {
+    right: 10px;
+}
+
+.scroll-nav-btn i {
+    font-size: 1.2rem;
 }
 
 /* Skills Section */
@@ -911,9 +961,18 @@ nav ul li a.active {
 }
 
 .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    display: flex;
     gap: 30px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+    -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+    padding: 10px 5px 20px 5px;
+    position: relative;
+}
+
+.projects-grid::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome, Safari and Opera */
 }
 
 .project-card {
@@ -922,11 +981,10 @@ nav ul li a.active {
     overflow: hidden;
     box-shadow: var(--card-shadow);
     transition: var(--transition);
-}
-
-.project-card {
+    min-width: 300px;
+    max-width: 350px;
+    flex-shrink: 0;
     position: relative;
-    overflow: hidden;
 }
 
 .project-card::before {
@@ -1034,9 +1092,18 @@ nav ul li a.active {
 
 /* Certifications Section */
 .certifications-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    display: flex;
     gap: 30px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+    -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+    padding: 10px 5px 20px 5px;
+    position: relative;
+}
+
+.certifications-grid::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome, Safari and Opera */
 }
 
 .certification-card {
@@ -1046,6 +1113,9 @@ nav ul li a.active {
     box-shadow: var(--card-shadow);
     text-align: center;
     transition: var(--transition);
+    min-width: 250px;
+    max-width: 300px;
+    flex-shrink: 0;
 }
 
 .certification-card:hover {
@@ -1079,9 +1149,25 @@ nav ul li a.active {
     background-color: white;
 }
 
+.education-container {
+    display: flex;
+    gap: 30px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+    -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+    padding: 10px 5px 20px 5px;
+    position: relative;
+}
+
+.education-container::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome, Safari and Opera */
+}
+
 .education-card {
-    max-width: 600px;
-    margin: 0 auto;
+    min-width: 300px;
+    max-width: 400px;
+    flex-shrink: 0;
     background-color: var(--light-bg);
     border-radius: 10px;
     padding: 30px;
@@ -1301,8 +1387,10 @@ footer {
         flex-direction: column;
     }
 
-    .achievements-content {
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    /* Adjust scroll buttons for smaller screens */
+    .scroll-nav-btn {
+        width: 35px;
+        height: 35px;
     }
 }
 
@@ -1444,12 +1532,14 @@ footer {
         grid-template-columns: 1fr;
     }
 
-    .projects-grid {
-        grid-template-columns: 1fr;
+    /* Adjust scroll buttons for very small screens */
+    .scroll-nav-btn {
+        width: 30px;
+        height: 30px;
     }
 
-    .certifications-grid {
-        grid-template-columns: 1fr;
+    .scroll-nav-btn i {
+        font-size: 1rem;
     }
 
     /* Ensure content fits within mobile viewport */
@@ -1475,10 +1565,12 @@ footer {
         padding: 15px;
     }
 
-    /* Make sure project cards fit */
-    .project-card {
-        width: 100%;
-        max-width: 100%;
+    /* Make sure cards have appropriate width on mobile */
+    .achievement-card,
+    .project-card,
+    .certification-card,
+    .education-card {
+        min-width: 260px;
     }
 
     /* Experience section small screen styles */
