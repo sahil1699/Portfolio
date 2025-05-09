@@ -1197,12 +1197,37 @@ nav ul li a.active {
     margin-top: 10px;
 }
 
-/* Contact Section */
-.contact {
+/* About & Contact Section */
+.about-contact {
     background-color: var(--light-bg);
 }
 
-.contact-content {
+.about-contact-content {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.about-text {
+    text-align: justify;
+}
+
+.about-text h3 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: var(--secondary-color);
+    text-align: center;
+}
+
+.about-text p {
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+.contact-wrapper {
     display: flex;
     flex-wrap: wrap;
     gap: 50px;
@@ -1212,6 +1237,13 @@ nav ul li a.active {
 .contact-info {
     flex: 1;
     min-width: 300px;
+}
+
+.contact-info h3 {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+    color: var(--secondary-color);
+    text-align: center;
 }
 
 .contact-item {
@@ -1231,9 +1263,15 @@ nav ul li a.active {
     justify-content: center;
     font-size: 1.5rem;
     margin-right: 20px;
+    transition: var(--transition);
 }
 
-.contact-details h3 {
+.contact-item:hover .contact-icon {
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(0, 102, 204, 0.3);
+}
+
+.contact-details h4 {
     font-size: 1.2rem;
     margin-bottom: 5px;
     color: var(--secondary-color);
@@ -1245,14 +1283,15 @@ nav ul li a.active {
 }
 
 .contact-social h3 {
-    font-size: 1.3rem;
-    margin-bottom: 20px;
+    font-size: 1.8rem;
+    margin-bottom: 30px;
     color: var(--secondary-color);
+    text-align: center;
 }
 
 .contact-social .social-links {
     margin-top: 0;
-    justify-content: flex-start;
+    justify-content: center;
 }
 
 .contact-social .social-links a {
@@ -1260,6 +1299,11 @@ nav ul li a.active {
     height: 55px;
     font-size: 1.6rem;
     margin-bottom: 15px;
+    transition: var(--transition);
+}
+
+.contact-social .social-links a:hover {
+    transform: translateY(-8px);
 }
 
 /* Footer */
@@ -1383,8 +1427,8 @@ footer {
         justify-content: center;
     }
 
-    .about-content {
-        flex-direction: column;
+    .about-contact-content {
+        gap: 30px;
     }
 
     /* Adjust scroll buttons for smaller screens */
@@ -1471,8 +1515,9 @@ footer {
         font-size: 2.5rem;
     }
 
-    .contact-content {
+    .contact-wrapper {
         flex-direction: column;
+        gap: 30px;
     }
 
     /* Experience section responsive styles */
@@ -1668,6 +1713,6 @@ footer {
     }
 }
 
-.hero, .about, .experience, .skills, .projects, .certifications, .education, .contact {
+.hero, .experience, .skills, .projects, .certifications, .education, .about-contact {
     animation: fadeIn 1s ease-out;
 }

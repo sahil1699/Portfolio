@@ -434,12 +434,6 @@ function initHorizontalScrolling() {
     // Define sections with horizontal scrolling
     const scrollSections = [
         {
-            container: '.achievements-content',
-            prevBtn: '#achievements-prev',
-            nextBtn: '#achievements-next',
-            cardWidth: 350 // Approximate width of each card including gap
-        },
-        {
             container: '.projects-grid',
             prevBtn: '#projects-prev',
             nextBtn: '#projects-next',
@@ -450,6 +444,12 @@ function initHorizontalScrolling() {
             prevBtn: '#certifications-prev',
             nextBtn: '#certifications-next',
             cardWidth: 300
+        },
+        {
+            container: '.achievements-content',
+            prevBtn: '#achievements-prev',
+            nextBtn: '#achievements-next',
+            cardWidth: 350 // Approximate width of each card including gap
         },
         {
             container: '.education-container',
