@@ -370,27 +370,42 @@ document.addEventListener('DOMContentLoaded', function() {
     // Animate skill bars when they come into view
     const skillBars = document.querySelectorAll('.skill-progress');
     const skillSection = document.querySelector('.skills');
+    let isSkillSectionVisible = false;
 
     function animateSkillBars() {
         const sectionTop = skillSection.offsetTop;
         const sectionHeight = skillSection.offsetHeight;
         const scrollPosition = window.scrollY + window.innerHeight;
+        const currentlyVisible = scrollPosition > sectionTop && window.scrollY < sectionTop + sectionHeight;
 
-        if (scrollPosition > sectionTop && window.scrollY < sectionTop + sectionHeight) {
+        // Check if we've entered or left the skills section
+        if (currentlyVisible && !isSkillSectionVisible) {
+            // Animate the skill bars when entering the section
             skillBars.forEach(bar => {
-                const width = bar.style.width;
+                const width = bar.getAttribute('data-width') || bar.style.width;
+                // Store the target width if not already stored
+                if (!bar.getAttribute('data-width')) {
+                    bar.setAttribute('data-width', width);
+                }
                 bar.style.width = '0';
                 setTimeout(() => {
                     bar.style.width = width;
                 }, 200);
             });
-
-            // Remove the event listener once animation is triggered
-            window.removeEventListener('scroll', animateSkillBars);
+            isSkillSectionVisible = true;
+        } else if (!currentlyVisible && isSkillSectionVisible) {
+            // Reset the skill bars when leaving the section
+            skillBars.forEach(bar => {
+                bar.style.width = '0';
+            });
+            isSkillSectionVisible = false;
         }
     }
 
     window.addEventListener('scroll', animateSkillBars);
+
+    // Initial check in case the section is already in view on page load
+    animateSkillBars();
 
     // Initialize project graphics with simple static visuals
     initProjectGraphics();
@@ -430,8 +445,28 @@ document.addEventListener('DOMContentLoaded', function() {
         const floatingResumeBtn = document.querySelector('.floating-resume-btn');
         if (window.innerWidth <= 768) {
             floatingResumeBtn.style.display = 'block';
+
+            // Keep experience cards closed on mobile view
+            const firstDetails = document.querySelector('.timeline-details');
+            const firstButton = document.querySelector('.toggle-details');
+
+            if (firstDetails && firstButton) {
+                // Close the first card when switching to mobile view
+                firstDetails.classList.remove('active');
+                firstButton.classList.remove('active');
+            }
         } else {
             floatingResumeBtn.style.display = 'none';
+
+            // Expand the first experience card on desktop view
+            const firstDetails = document.querySelector('.timeline-details');
+            const firstButton = document.querySelector('.toggle-details');
+
+            if (firstDetails && firstButton) {
+                // Open the first card when switching to desktop view
+                firstDetails.classList.add('active');
+                firstButton.classList.add('active');
+            }
         }
     });
 });
@@ -590,14 +625,26 @@ function initExperienceTimeline() {
         });
     });
 
-    // Expand the first position by default
+    // Expand the first position by default only on desktop view
     const firstDetails = document.querySelector('.timeline-details');
     const firstButton = document.querySelector('.toggle-details');
 
     if (firstDetails && firstButton) {
-        console.log("Expanding first position by default");
-        firstDetails.classList.add('active');
-        firstButton.classList.add('active');
+        // Check if we're on desktop view (width > 768px)
+        if (window.innerWidth > 768) {
+            console.log("Expanding first position by default on desktop");
+            firstDetails.classList.add('active');
+            firstButton.classList.add('active');
+        } else {
+            console.log("Mobile view detected - keeping experience cards closed by default");
+            // Ensure all cards are closed on mobile
+            document.querySelectorAll('.timeline-details').forEach(details => {
+                details.classList.remove('active');
+            });
+            document.querySelectorAll('.toggle-details').forEach(button => {
+                button.classList.remove('active');
+            });
+        }
     }
 }
 
@@ -1242,9 +1289,11 @@ function initScrollAnimations() {
     const sections = document.querySelectorAll('section');
     const animationObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
+            // Get the section index to determine animation direction
+            const sectionIndex = Array.from(sections).indexOf(entry.target);
+
             if (entry.isIntersecting) {
-                // Determine animation direction based on section index
-                const sectionIndex = Array.from(sections).indexOf(entry.target);
+                // Apply animation when section enters viewport
                 if (sectionIndex % 2 === 0) {
                     entry.target.classList.add('animate-in');
                 } else if (sectionIndex % 3 === 0) {
@@ -1254,14 +1303,21 @@ function initScrollAnimations() {
                 }
 
                 // Add a subtle floating animation to cards after they appear
-                setTimeout(() => {
-                    const cards = entry.target.querySelectorAll('.project-card, .certification-card, .achievement-card, .education-card');
-                    cards.forEach((card, index) => {
-                        setTimeout(() => {
-                            card.style.animation = 'float 4s ease-in-out infinite';
-                        }, index * 150); // Stagger the animations
-                    });
-                }, 1000);
+                const cards = entry.target.querySelectorAll('.project-card, .certification-card, .achievement-card, .education-card');
+                cards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.style.animation = 'float 4s ease-in-out infinite';
+                    }, index * 150); // Stagger the animations
+                });
+            } else {
+                // Remove animation classes when section leaves viewport
+                entry.target.classList.remove('animate-in', 'animate-in-right', 'animate-in-left');
+
+                // Reset card animations
+                const cards = entry.target.querySelectorAll('.project-card, .certification-card, .achievement-card, .education-card');
+                cards.forEach(card => {
+                    card.style.animation = 'none';
+                });
             }
         });
     }, {
