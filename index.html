@@ -19,14 +19,14 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#experience">Experience</a></li>
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="#certifications">Certifications</a></li>
-                    <li><a href="#achievements">Achievements</a></li>
-                    <li><a href="#skills">Skills</a></li>
-                    <li><a href="#education">Education</a></li>
-                    <li><a href="#about-contact">Contact</a></li>
+                    <li style="--i:0"><a href="#home">Home</a></li>
+                    <li style="--i:1"><a href="#experience">Experience</a></li>
+                    <li style="--i:2"><a href="#projects">Projects</a></li>
+                    <li style="--i:3"><a href="#certifications">Certifications</a></li>
+                    <li style="--i:4"><a href="#achievements">Achievements</a></li>
+                    <li style="--i:5"><a href="#skills">Skills</a></li>
+                    <li style="--i:6"><a href="#education">Education</a></li>
+                    <li style="--i:7"><a href="#about-contact">Contact</a></li>
                 </ul>
             </nav>
             <div class="resume-btn">
@@ -36,6 +36,18 @@
     </header>
 
     <canvas id="background-canvas"></canvas>
+
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator">
+        <div class="scroll-indicator-dot" data-section="home"></div>
+        <div class="scroll-indicator-dot" data-section="experience"></div>
+        <div class="scroll-indicator-dot" data-section="projects"></div>
+        <div class="scroll-indicator-dot" data-section="certifications"></div>
+        <div class="scroll-indicator-dot" data-section="achievements"></div>
+        <div class="scroll-indicator-dot" data-section="skills"></div>
+        <div class="scroll-indicator-dot" data-section="education"></div>
+        <div class="scroll-indicator-dot" data-section="about-contact"></div>
+    </div>
 
     <section id="home" class="hero">
         <div class="container">
@@ -74,7 +86,7 @@
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
                         <div class="timeline-header">
-                            <h3>Associate - Software Engineering</h3>
+                            <h3>Software Engineer</h3>
                             <p class="timeline-date">January 2023 - Present · 2 years 5 months</p>
                             <p class="timeline-location">Hybrid</p>
                             <button class="toggle-details" aria-label="Toggle details">
@@ -113,7 +125,7 @@
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
                         <div class="timeline-header">
-                            <h3>Jr. Associate - Software Engineering</h3>
+                            <h3>Jr. Software Engineer</h3>
                             <p class="timeline-date">July 2021 - December 2022 · 1 year 6 months</p>
                             <p class="timeline-location">Remote</p>
                             <button class="toggle-details" aria-label="Toggle details">
@@ -334,6 +346,16 @@
                             <i class="fas fa-certificate"></i>
                         </div>
                         <div class="certification-content">
+                            <h3>Supervised Machine Learning: Regression and Classification</h3>
+                            <p>Coursera</p>
+                            <a href="https://www.coursera.org/account/accomplishments/verify/GRJD77MPR143" target="_blank">View Certificate</a>
+                        </div>
+                    </div>
+                    <div class="certification-card">
+                        <div class="certification-icon">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <div class="certification-content">
                             <h3>System Design Course</h3>
                             <p>AlgoExpert</p>
                             <a href="https://drive.google.com/file/d/1y4L1g0uPrqjSb-vemsN07k6vM0GH4eaj/view?usp=sharing" target="_blank">View Certificate</a>
@@ -367,16 +389,6 @@
                             <h3>The Complete Web Development Bootcamp</h3>
                             <p>Dr. Angela Yu, Udemy</p>
                             <a href="https://www.udemy.com/certificate/UC-78bd609e-90bc-47c9-bc6e-76e152b5d2d8/" target="_blank">View Certificate</a>
-                        </div>
-                    </div>
-                    <div class="certification-card">
-                        <div class="certification-icon">
-                            <i class="fas fa-certificate"></i>
-                        </div>
-                        <div class="certification-content">
-                            <h3>Supervised Machine Learning: Regression and Classification</h3>
-                            <p>Coursera</p>
-                            <a href="https://www.coursera.org/account/accomplishments/verify/GRJD77MPR143" target="_blank">View Certificate</a>
                         </div>
                     </div>
                     <div class="certification-card">
@@ -524,15 +536,27 @@
                     <h3>Databases</h3>
                     <div class="skill-items">
                         <div class="skill-item">
-                            <span class="skill-name">SQL</span>
+                            <span class="skill-name">MongoDB</span>
                             <div class="skill-bar">
-                                <div class="skill-progress" style="width: 90%"></div>
+                                <div class="skill-progress" style="width: 95%"></div>
                             </div>
                         </div>
                         <div class="skill-item">
-                            <span class="skill-name">MongoDB</span>
+                            <span class="skill-name">SQL</span>
                             <div class="skill-bar">
                                 <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">AWS DynamoDB</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Salesforce</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 75%"></div>
                             </div>
                         </div>
                     </div>

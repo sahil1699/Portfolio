@@ -7,6 +7,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize experience timeline with collapsible sections
     initExperienceTimeline();
+
+    // Initialize scroll animations
+    initScrollAnimations();
+
+    // Initialize scroll indicator
+    initScrollIndicator();
     // Custom background animation with random shapes
     const canvas = document.getElementById('background-canvas');
     const ctx = canvas.getContext('2d');
@@ -29,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
     class ShapesBackground {
         constructor() {
             this.shapes = [];
-            this.numShapes = 12; // Fewer shapes for a cleaner look
+            this.numShapes = 18; // Slightly more shapes for better visual effect
             this.mouseX = 0;
             this.mouseY = 0;
             this.mouseRadius = 250; // Larger mouse influence radius
@@ -86,9 +92,9 @@ document.addEventListener('DOMContentLoaded', function() {
             // Random opacity between 0.05 and 0.15 for very subtle appearance
             const opacity = 0.05 + Math.random() * 0.1;
 
-            // Random movement speed and direction (slower for more subtle movement)
-            const speedX = (Math.random() - 0.5) * 0.3;
-            const speedY = (Math.random() - 0.5) * 0.3;
+            // Random movement speed and direction (slightly faster for more dynamic movement)
+            const speedX = (Math.random() - 0.5) * 0.5;
+            const speedY = (Math.random() - 0.5) * 0.5;
 
             // Random rotation
             const rotation = Math.random() * Math.PI * 2;
@@ -114,14 +120,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
             this.shapes.push(shape);
 
-            // Limit the number of shapes
-            if (this.shapes.length > 25) {
+            // Limit the number of shapes (increased to allow for more shapes)
+            if (this.shapes.length > 35) {
                 this.shapes.shift();
             }
         }
 
         update() {
-            this.time += 0.01;
+            this.time += 0.015; // Slightly faster time progression for more dynamic animations
 
             // Update each shape
             this.shapes.forEach(shape => {
@@ -324,15 +330,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Sticky header
     const header = document.querySelector('header');
-    const heroSection = document.querySelector('.hero');
 
     window.addEventListener('scroll', function() {
         if (window.scrollY > 50) {
             header.style.padding = '10px 0';
             header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+            header.classList.add('sticky');
         } else {
             header.style.padding = '15px 0';
             header.style.boxShadow = 'none';
+            header.classList.remove('sticky');
         }
 
         // Active link highlighting with smooth transitions
@@ -1228,4 +1235,91 @@ function roundRect(ctx, x, y, width, height, radius, fill, stroke) {
     if (stroke) {
         ctx.stroke();
     }
+}
+
+// Initialize scroll animations for sections
+function initScrollAnimations() {
+    const sections = document.querySelectorAll('section');
+    const animationObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Determine animation direction based on section index
+                const sectionIndex = Array.from(sections).indexOf(entry.target);
+                if (sectionIndex % 2 === 0) {
+                    entry.target.classList.add('animate-in');
+                } else if (sectionIndex % 3 === 0) {
+                    entry.target.classList.add('animate-in-right');
+                } else {
+                    entry.target.classList.add('animate-in-left');
+                }
+
+                // Add a subtle floating animation to cards after they appear
+                setTimeout(() => {
+                    const cards = entry.target.querySelectorAll('.project-card, .certification-card, .achievement-card, .education-card');
+                    cards.forEach((card, index) => {
+                        setTimeout(() => {
+                            card.style.animation = 'float 4s ease-in-out infinite';
+                        }, index * 150); // Stagger the animations
+                    });
+                }, 1000);
+            }
+        });
+    }, {
+        threshold: 0.15, // Trigger when 15% of the section is visible
+        rootMargin: '-50px 0px' // Adjust based on header height
+    });
+
+    // Observe all sections
+    sections.forEach(section => {
+        animationObserver.observe(section);
+    });
+}
+
+// Initialize scroll indicator
+function initScrollIndicator() {
+    const sections = document.querySelectorAll('section');
+    const scrollDots = document.querySelectorAll('.scroll-indicator-dot');
+
+    // Update active dot based on scroll position
+    function updateScrollIndicator() {
+        const scrollPosition = window.scrollY + window.innerHeight / 3;
+
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+            const sectionId = section.getAttribute('id');
+
+            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                // Remove active class from all dots
+                scrollDots.forEach(dot => dot.classList.remove('active'));
+
+                // Add active class to current dot
+                const activeDot = document.querySelector(`.scroll-indicator-dot[data-section="${sectionId}"]`);
+                if (activeDot) {
+                    activeDot.classList.add('active');
+                }
+            }
+        });
+    }
+
+    // Add click event to dots
+    scrollDots.forEach(dot => {
+        dot.addEventListener('click', function() {
+            const sectionId = this.getAttribute('data-section');
+            const targetSection = document.getElementById(sectionId);
+
+            if (targetSection) {
+                window.scrollTo({
+                    top: targetSection.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // Initial update
+    updateScrollIndicator();
+
+    // Update on scroll
+    window.addEventListener('scroll', updateScrollIndicator);
 }
