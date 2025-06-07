@@ -616,9 +616,12 @@ nav ul li a.active {
 }
 
 .timeline-item:last-child {
+    margin-bottom: 0px;
+}
+.mbt50{
+    margin-top: 80px;
     margin-bottom: 50px;
 }
-
 .timeline-dot {
     position: absolute;
     left: 10px;
